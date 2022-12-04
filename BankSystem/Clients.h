@@ -4,7 +4,7 @@
 using namespace std;
 class AbstractClient
 {
-private:
+protected:
     float _moneyAmount;
 public:
     int ID;

@@ -19,8 +19,6 @@ private:
 
     void SendMoney();
 
-    void PutMoney();
-
     void ChooseClient(int ID);
 
     void ShowClients();
@@ -40,4 +38,5 @@ public:
     Bank(string name, float money, int id, int percent);
 
     Bank() {};
+    ~Bank();
 };

@@ -18,9 +18,7 @@ private:
 
     void ChooseBank(int number);
 
-    static BankSystem* Instance;    
-
-    void Work();
+    static BankSystem* Instance;  
     
 public:
     

@@ -38,7 +38,6 @@ void BankSystem::Manager()
             cout << "¬ведите ID банка, который хотите выбрать. " << endl;
             cin >> id;
             ChooseBank(id);
-            Work();
             break;
         case '5':
             return;
@@ -95,7 +94,7 @@ void BankSystem::RemoveBank(int chosenBankID)
     int removal = 0;
     for (int i = 0; i < _banksCount - 1; i++)
     {
-        if (i == _banksCount - 1)
+        if (i == chosenBankID)
             removal = 1;
         newBanksList[i] = _banks[i + removal];
     }
@@ -113,6 +112,12 @@ void BankSystem::ChooseBank(int chosenBankID)
             return;
     }
     _currentBank = FindBank(chosenBankID);
+    if (_currentBank == nullptr)
+    {
+        cout << "Ѕанка с таким ID не существует. " << endl;
+        return;
+    }
+    _currentBank->Manager();
 }
 
 Bank* BankSystem::FindBank(int id)
@@ -125,10 +130,7 @@ Bank* BankSystem::FindBank(int id)
     return nullptr;
 }
 
-void BankSystem::Work()
-{
-    _currentBank->Manager();
-}
+
 
 void BankSystem::ShowBanks()
 {

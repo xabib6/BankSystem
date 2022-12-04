@@ -12,10 +12,13 @@ void Bank::AddClient()
             cout << "Ошибка ввода. Попробуйте снова. " << endl;
     }
     AbstractClient* newClient;
+    cout << "Введите начальный баланс. " << endl;
+    float money;
+    cin >> money;
     if (input == '1')
-        newClient = new IndividualClient(_nextClientID, 0);
+        newClient = new IndividualClient(_nextClientID, money);
     else if (input == '2')
-        newClient = new EntityClient(_nextClientID, 0);
+        newClient = new EntityClient(_nextClientID, money);
     else return;
 
     AbstractClient** newClientsList = new AbstractClient * [ClientsCount + 1];
@@ -50,7 +53,7 @@ void Bank::RemoveClient(int chosenClientID)
     int removal = 0;
     for (int i = 0; i < ClientsCount - 1; i++)
     {
-        if (i == chosenClientID - 1)
+        if (i == chosenClientID)
             removal = 1;
         newClientsList[i] = _clients[i + removal];
     }
@@ -75,6 +78,7 @@ void Bank::SendMoney()
             if (input == '2')
             {
                 cout << "Выберите банк получателя. " << endl;
+                BankSystem::GetInstance()->ShowBanks();
                 int choosenBank;
                 cin >> choosenBank;
                 bank = BankSystem::GetInstance()->FindBank(choosenBank);
@@ -108,16 +112,6 @@ void Bank::SendMoney()
 
     if (_currentClient->SendMoney(other, money, _transactionPercent))
         _moneyAmount += money / 100 * _transactionPercent;
-}
-
-void Bank::PutMoney()
-{
-    cout << "Введите сумму для пополнения. " << endl;
-    float money;
-    cin >> money;
-    _currentClient->PutMoney(money);
-    cout << "Баланс пополнен. " << endl;
-    _currentClient->ShowBalance();
 }
 
 void Bank::ChooseClient(int ID)
@@ -258,4 +252,9 @@ Bank::Bank(string name, float money, int id, int percent)
     _moneyAmount = money;
     ID = id;
     _transactionPercent = percent;
+}
+
+Bank::~Bank()
+{
+    delete[] _clients;
 }
